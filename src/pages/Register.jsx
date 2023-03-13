@@ -7,9 +7,26 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const handleRegister = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="register flex flex-col justify-center  items-center">
-      <SectionTitle title={"Register...."} />
+      <form onChange={handleRegister} className="flex flex-col gap-5">
+        <SectionTitle title={"Register...."} />
+        <div className="form-control flex flex-col gap-2">
+          <input
+            type="text"
+            placeholder="Write your name"
+            id="name"
+            value={formFields.name}
+            onChange={(e) =>
+              setFormFields({ ...formFields, name: e.target.value })
+            }
+            className=" border py-3 px-5  w-[25rem] outline-none rounded hover:border-violet-500"
+          />
+        </div>
+      </form>
     </div>
   );
 };
