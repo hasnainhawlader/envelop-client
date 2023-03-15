@@ -1,34 +1,54 @@
 import React, { useState } from "react";
+import FormControl from "../components/FormControl";
 import SectionTitle from "../components/SectionTitle";
 
 const Register = () => {
-  const [formFields, setFormFields] = useState({
+  const [formFields, setFormFeilds] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const handleRegister = (e) => {
+
+  const handleRegister = async (e) => {
     e.preventDefault();
+
+    await signup(formFields.name, formFields.email, formFields.password);
   };
+
   return (
-    <div className="register flex flex-col justify-center  items-center">
-      <form onChange={handleRegister} className="flex flex-col gap-5">
-        <SectionTitle title={"Register...."} />
-        <div className="form-control flex flex-col gap-2">
-          <input
-            type="text"
-            placeholder="Write your name"
-            id="name"
-            value={formFields.name}
-            onChange={(e) =>
-              setFormFields({ ...formFields, name: e.target.value })
-            }
-            className=" border py-3 px-5  w-[25rem] outline-none rounded hover:border-violet-500"
-          />
-        </div>
+    <div className="register flex flex-col justify-center items-center mt-20">
+      <form onSubmit={handleRegister} className="flex flex-col gap-5 w-[25rem]">
+        <SectionTitle title={"Register..."} />
+
+        <FormControl
+          label="name"
+          labelInner="Name"
+          inputType="text"
+          placeholder="Write your name"
+          formFields={formFields}
+          setFormFeilds={setFormFeilds}
+        />
+
+        <FormControl
+          label="email"
+          labelInner="Email Address"
+          inputType="email"
+          placeholder="Write your email"
+          formFields={formFields}
+          setFormFeilds={setFormFeilds}
+        />
+
+        <FormControl
+          label="password"
+          labelInner="Password"
+          inputType="password"
+          placeholder="Write your password"
+          formFields={formFields}
+          setFormFeilds={setFormFeilds}
+        />
       </form>
     </div>
   );
 };
 
-export default Register;
+export default React.memo(Register);
