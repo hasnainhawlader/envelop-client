@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../components/Button";
 import FormControl from "../components/FormControl";
 import SectionTitle from "../components/SectionTitle";
 
@@ -11,6 +12,15 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    console.log(formFields);
+
+    // clear
+
+    setFormFeilds({
+      name: "",
+      email: "",
+      password: "",
+    });
 
     await signup(formFields.name, formFields.email, formFields.password);
   };
@@ -46,6 +56,7 @@ const Register = () => {
           formFields={formFields}
           setFormFeilds={setFormFeilds}
         />
+        <Button text="Register" submit />
       </form>
     </div>
   );
