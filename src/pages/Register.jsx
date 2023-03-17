@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../components/Button";
 import FormControl from "../components/FormControl";
 import SectionTitle from "../components/SectionTitle";
+import { useSignup } from "../hooks/useSignup";
 
 const Register = () => {
   const [formFields, setFormFeilds] = useState({
@@ -9,11 +10,12 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const { signup, isloading, error } = useSignup();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     console.log(formFields);
-
+    await signup(formFields.name, formFields.email, formFields.password);
     // clear
 
     setFormFeilds({
@@ -21,8 +23,6 @@ const Register = () => {
       email: "",
       password: "",
     });
-
-    await signup(formFields.name, formFields.email, formFields.password);
   };
 
   return (
@@ -56,7 +56,10 @@ const Register = () => {
           formFields={formFields}
           setFormFeilds={setFormFeilds}
         />
-        <Button text="Register" submit />
+        <Button text={isloading ? "Register..." : "Register"} submit />
+        {error && (
+          <p className="bg-rose-100 text-rose-500 py-3 text-center">{error}</p>
+        )}
       </form>
     </div>
   );
