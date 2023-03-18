@@ -8,4 +8,4 @@ const SectionTitle = ({ title }) => {
   );
 };
 
-export default SectionTitle;
+export default React.memo(SectionTitle);

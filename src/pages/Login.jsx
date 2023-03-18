@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Button from "../components/Button";
 import FormControl from "../components/FormControl";
 import SectionTitle from "../components/SectionTitle";
+import Button from "../components/Button";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
   const [formFields, setFormFeilds] = useState({
@@ -9,17 +10,12 @@ const Login = () => {
     password: "",
   });
 
+  const { login, isLoading, error } = useLogin();
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(formFields);
 
-    // clear
-
-    setFormFeilds({
-      name: "",
-      email: "",
-      password: "",
-    });
+    await login(formFields.email, formFields.password);
   };
 
   return (
@@ -44,7 +40,14 @@ const Login = () => {
           formFields={formFields}
           setFormFeilds={setFormFeilds}
         />
-        <Button text="Register" submit />
+
+        <Button text={isLoading ? "Logging..." : "Login"} submit />
+
+        {error && (
+          <p className="bg-rose-50 text-rose-500 p-5 rounded border border-rose-500">
+            {error}
+          </p>
+        )}
       </form>
     </div>
   );
